@@ -12,7 +12,7 @@ export class LoginPage extends BasePage {
     }
     private listLocator = this.getLocator(this.pageLocator)
     async goToPage(){
-        await this.page.goto('/sign-in/')
+        await this.page.goto('/sign-in/?returnTo=%2Faccount%2F')
     }
     async fillEmail(email: string){
         this.fillWithLog(this.listLocator('emailInput'), 'bpmtuan8@gmail.com')
@@ -22,6 +22,9 @@ export class LoginPage extends BasePage {
     }
     async fillPIN(PIN: string){
         this.listLocator('pinInput').pressSequentially('222222')
+    }
+    async expectedLoggedIn(){
+        await expect(this.page).toHaveURL('https://dev-web.payd.vn/')
     }
     async isOnPage(){
         await expect(this.listLocator('emailInput')).toBeVisible()
