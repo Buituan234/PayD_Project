@@ -1,18 +1,20 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+import path from 'path';
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+const environment = process.env.NODE_ENV || 'development'
+
+dotenv.config({ path: path.resolve(__dirname, `.env.${environment}`) });
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './tests',
+  testDir: './',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -34,37 +36,37 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
+    // {
+    //   name: 'chromium',
+    //   use: { ...devices['Desktop Chrome'] },
+    // },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
     {
       name: 'PayD-setUp',
-      testMatch: 'PAYD_WEBAPP/auth/user.setup.ts',
+      testMatch: 'auth/user.setup.ts',
       use: {
         browserName: 'chromium',
-        baseURL: 'https://dev-web.payd.vn/'
+        baseURL: 'https://coffee.autoneko.com'
       }
     },
     {
-      name: 'chromium',
+      name: 'CoffeeNeko_UI',
       dependencies: ['PayD-setUp'],
       use: {
         ...devices['Desktop Chrome'],
-        baseURL: 'https://dev-web.payd.vn/',
-        storageState: 'PAYD_WEBAPP/auth/user.json'
+        baseURL: 'https://coffee.autoneko.com',
+        storageState: './auth/user.json'
       },
-      testMatch: '**/*.spec.ts'
+      testMatch: 'tests/**/*.spec.ts'
     }
 
     /* Test against mobile viewports. */
