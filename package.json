@@ -13,6 +13,8 @@
     "@types/node": "^25.8.0"
   },
   "dependencies": {
+    "allure-js-commons": "^3.9.0",
+    "allure-playwright": "^3.9.0",
     "dotenv": "^17.4.2",
     "path": "^0.12.7",
     "playwright": "^1.60.0"

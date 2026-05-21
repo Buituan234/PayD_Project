@@ -24,7 +24,10 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+    ['html'],
+    ['allure-playwright']
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
@@ -60,11 +63,11 @@ export default defineConfig({
     },
     {
       name: 'CoffeeNeko_UI',
-      dependencies: ['PayD-setUp'],
+      // dependencies: ['PayD-setUp'],
       use: {
         ...devices['Desktop Chrome'],
         baseURL: 'https://coffee.autoneko.com',
-        storageState: './auth/user.json'
+        // storageState: './auth/user.json'
       },
       testMatch: 'tests/**/*.spec.ts'
     }
